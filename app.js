@@ -22,13 +22,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser("some secret string or whatever"));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// Verify and decrypt cookie, and get user
 app.use(function(req, res, next) {
     if (req.signedCookie["user"]) {
         var decryptedCookie = decrypt(req.signedCookie["user"]);
         var authenticated = authenticateUser(decryptedCookie);
         if (authenticated) {
             req.authenticated = true;
+            //TODO: Get user from database from decrypted cookie
             req.user = decryptedCookie
         }
     }

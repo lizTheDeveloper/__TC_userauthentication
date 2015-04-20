@@ -4,7 +4,8 @@ var router = express.Router();
 // ** Authentication Middleware **
 router.use(function(req,res,next) {
 	if (req.authenticated) {
-		console.log("User " + username + " logged in at " + new Date.now());
+		// Log so that we know if someone tries to access a page and whether or not they are authenticated
+		console.log("User " + req.user + " authenticated at " + new Date.now());
 		next();
 	} else {
 		res.alert("You must be logged in to do that");
